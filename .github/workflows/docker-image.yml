@@ -11,8 +11,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag marketdataserv:$(date +%s)
+      - uses: actions/checkout@v3
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: "tanulsangal"
+          DOCKER_PASSWORD: "abcd@1234"
+        run: echo "${{ secrets.DOCKER_PASS }} | docker login  docker.io -u ${{ secrets.DOCKER_USER }} --password-stdin"
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag tanulsangal/marketdataserv:latest
+      - name: Tag the image to latest
+        run: docker tag tanulsangal/marketdataserv:latest tanulsangal/marketdataserv:latest
+      - name: Image push
+        run: docker push tanulsangal/marketdataserv:latest
