@@ -17,7 +17,7 @@ jobs:
         env:
           DOCKER_USERNAME: "tanulsangal"
           DOCKER_PASSWORD: "abcd@1234"
-        run: echo "tanulsangal | docker login  docker.io -u tanulsangal --password-stdin"
+        run: docker login -u tanulsangal -p abcd@1234
 
       - name: Build Docker image
         run: docker build . --file Dockerfile --tag tanulsangal/marketdataserv:latest
